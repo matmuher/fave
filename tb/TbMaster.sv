@@ -5,10 +5,16 @@ module TbMaster;
     Bit clk;
 
     TbRegfile tbRegfile(.clk(clk));
+    TbDataMem tbDataMem(.clk(clk));
+    TbInstrMem tbInstrMem(.clk(clk));
+    TbAlu tbAlu(.clk(clk));
 
     task run_all();
 
         tbRegfile.run();
+        tbDataMem.run();
+        tbInstrMem.run();
+        tbAlu.run();
 
     endtask;
 
@@ -18,13 +24,13 @@ module TbMaster;
         $dumpfile(`WAVEFRONT_PATH);
         $dumpvars();
         $display("Dump to %0", `WAVEFRONT_PATH);
-        $display("Easy come - easy go");
+        $display("You're gonna carry this weight, space-cowboy");
         $display("**Start tests**");
 
         run_all();
         
         $display("**Tests are OK**");
-        $display("You're gonna carry this weight, space-cowboy");
+        $display("Easy come - easy go");
         $finish;
     end
 

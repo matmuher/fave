@@ -5,9 +5,9 @@ module FaVe
     input reset,
     input clk
 );
-
-    Data pc;
+    Data pc = 0;
     InstrMem instrMem(
+        .reset(reset),
         .clk(clk),
         .pc(pc),
         
@@ -41,7 +41,8 @@ module FaVe
         .clk(clk),
         .aluCtl(aluCtl),
 
-        .regfileOut(regfileOut),
+        .src1(regfileOut.rd1),
+        .src2(regfileOut.rd2),
 
         .result(aluResult)
     );
@@ -51,6 +52,7 @@ module FaVe
     Data adr;
     Data dataMemWd;
     DataMem dataMem(
+        .reset(reset),
         .clk(clk),
         .we(dataMemWe),
 

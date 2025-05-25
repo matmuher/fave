@@ -2,24 +2,21 @@
 
 module Alu
 (
-    input Bit clk,
+    input clk,
     input AluCtl aluCtl,
 
-    input RegfileOut regfileOut,
+    input Data src1,
+    input Data src2,
 
     output Data result
 );
-    Data src1 = regfileOut.rd1;
-    Data src2 = regfileOut.rd2;
-
     always @(posedge clk) begin
         case(aluCtl)
             Add: result <= src1 + src2;
             Sub: result <= src1 - src2;
             Mul: result <= src1 * src2;
-            Equ: result <= src1 ^ src2;
+            Neq: result <= src1 ^ src2;
             default: result <= '0; 
         endcase
     end
-
 endmodule

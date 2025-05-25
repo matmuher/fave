@@ -14,12 +14,13 @@ typedef enum logic [2:0] {
     Add = 3'b000,
     Sub = 3'b001,
     Mul = 3'b010,
-    Equ = 3'b011  
+    Neq = 3'b011  
 } AluCtl;
 
-`define TEST(name, code)                            \
+`define TEST(name, setup, test)                     \
+        setup;                                      \
         reset = 1; #5; reset = 0; #5;               \
-        $display("=== TEST: [%s] ===", `"name`");   \
-        code;                                       \
+        $display("test: [%s]", name);               \
+        test;                                       \
 
 `endif

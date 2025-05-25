@@ -24,19 +24,37 @@ module TbRegfile(
 //---------------------------------------------------------
 
     task run();
-        `TEST(read a1,
+        $display(">>> Regfile");
+
+        `TEST("parse a1 && a2 && a3",
+            
             instr = 32'hFFC4A303;
-            #5;
-            assert(regfile.a1 == 5'h9);
-            assert(regfile.a3 == 5'h6);
-            assert(regfileOut.rd1 == 32'h9); // init mem: x1 = 1, x2 = 2 ...
+            #5;,
+
+            // init mem: x1 = 1, x2 = 2 ...
+            assert(32'(regfile.a1) == regfileOut.rd1);
+            assert(32'(regfile.a2) == regfileOut.rd2);
+            assert(regfile.a1 == 5'b01001);
+            assert(regfile.a2 == 5'b11100);
+            assert(regfile.a3 == 5'b00110); 
         );
 
-        `TEST(write a3,
+        `TEST("we: write a3",
+            
             regfileWe = 1'b1;
-            regfileWd3 = 32'hFA5E;
+            regfileWd3 = 32'hFA5E;,
+
             #5;
-            assert(regfile.mem[5'h6] == 32'hFA5E);
+            assert(regfile.mem[regfile.a3] == 32'hFA5E);
+        );
+
+        `TEST("!we: write a3",
+
+            regfileWe = 1'b0;
+            regfileWd3 = 32'hFA5E;,
+
+            #5;
+            assert(regfile.mem[regfile.a3] == 32'(regfile.a3));
         );
     endtask
 

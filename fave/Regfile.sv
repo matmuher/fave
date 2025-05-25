@@ -16,9 +16,9 @@ module Regfile
 
     output RegfileOut out
 );
-    RegIdx a1 = instr[`RangeA1];
-    RegIdx a2 = instr[`RangeA2];
-    RegIdx a3 = instr[`RangeA3];
+    RegIdx a1;
+    RegIdx a2;
+    RegIdx a3;
 
     Data mem [0:RegNum-1];
 
@@ -27,7 +27,7 @@ module Regfile
             a1 <= 0;
             a2 <= 0;
             a3 <= 0;
-            $readmemh(`INIT_REGS, mem);
+            $readmemh(`INIT_REGM, mem);
             out.rd1 <= 0;
             out.rd2 <= 0;
         end else begin

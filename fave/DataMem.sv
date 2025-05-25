@@ -4,6 +4,7 @@ localparam MemSize = 256;
 
 module DataMem
 (
+    input reset,
     input clk,
     input we,
 
@@ -14,10 +15,13 @@ module DataMem
 );
     Data mem[0:MemSize-1];
 
-    always @(posedge clk) begin
-        rd <= mem[adr];
-
-        if (we) mem[adr] <= wd;
+    always @(posedge clk or reset) begin
+        if (reset) begin
+            $readmemh(`INIT_DATM, mem);
+        end else begin
+            rd <= mem[adr];
+            if (we) mem[adr] <= wd;
+        end
     end
 
 endmodule
