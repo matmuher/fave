@@ -1,6 +1,12 @@
+SRC_DIR = fave
 SRC = FaVe.sv InstrMem.sv Regfile.sv Extend.sv Alu.sv
-HEADERS = Defs.svh
-TOP = FaVe
+SRC := $(addprefix $(SRC_DIR)/, $(SRC))
+
+TEST_DIR = tb
+TEST = TbRegfile.sv TbMaster.sv
+TEST := $(addprefix $(TEST_DIR)/, $(TEST))
+
+TOP = TbMaster
 BUILD_DIR = build
 WAVEFRONT_FILE = wavefront.vcd
 WAVEFRONT_DIR = waves
@@ -12,13 +18,13 @@ all:
 
 	mkdir -p $(WAVEFRONT_DIR)
 
-	verilator --trace-vcd --trace-structs		\
+	verilator --trace-vcd --trace-structs --assert		\
 		--binary -j 0							\
 		--sv									\
 		--top-module $(TOP) 					\
-		$(SRC) 									\
+		$(SRC) $(TEST) 							\
 		--Mdir $(BUILD_DIR) 					\
-		-I $(HEADERS)							\
+		-I$(SRC_DIR)							\
 		-DWAVEFRONT_PATH=$(WAVEFRONT_PATH) 		\
 		-DINIT_REGS=\"$(INIT_REGS)\"		
 	

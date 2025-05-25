@@ -17,4 +17,9 @@ typedef enum logic [2:0] {
     Equ = 3'b011  
 } AluCtl;
 
+`define TEST(name, code)                            \
+        reset = 1; #5; reset = 0; #5;               \
+        $display("=== TEST: [%s] ===", `"name`");   \
+        code;                                       \
+
 `endif

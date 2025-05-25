@@ -2,8 +2,10 @@
 
 module FaVe
 (
+    input reset,
+    input clk
 );
-    Bit clk;
+
     Data pc;
     InstrMem instrMem(
         .clk(clk),
@@ -24,6 +26,7 @@ module FaVe
     Data writeData;
     Bit regfileWe = 1'b0;
     Regfile regfile(
+        .reset(reset),
         .clk(clk),
         .we(regfileWe),
 
@@ -58,23 +61,5 @@ module FaVe
     );
     Data dataMemOut;
 
-//---------------------------------------------------------
-
-    initial begin
-        clk = 0;
-        forever #5 clk = ~clk;
-    end
-
-    initial begin
-        $dumpfile(`WAVEFRONT_PATH);
-        $dumpvars();
-        $display("Dump to %0", `WAVEFRONT_PATH);
-        $display("Easy come");
-        
-        #100;        
-
-        $display("- easy go");
-        $finish;
-    end
 endmodule
 
