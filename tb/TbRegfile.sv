@@ -32,8 +32,8 @@ module TbRegfile(
             #5;,
 
             // init mem: x1 = 1, x2 = 2 ...
-            assert(32'(regfile.a1) == regfileOut.rd1);
-            assert(32'(regfile.a2) == regfileOut.rd2);
+            assert(regfileOut.rd1 == 32'h2004);
+            assert(regfileOut.rd2 == 32'(regfile.a2));
             assert(regfile.a1 == 5'b01001);
             assert(regfile.a2 == 5'b11100);
             assert(regfile.a3 == 5'b00110); 

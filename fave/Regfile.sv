@@ -3,7 +3,7 @@
 `define RangeA1 19:15
 `define RangeA2 24:20
 `define RangeA3 11:7
-localparam RegNum = 32;
+localparam RegNum = `REGM_SIZE;
 
 module Regfile
 (

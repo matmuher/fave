@@ -46,6 +46,7 @@ module TbDataMem(
             dataMemWe = 1'b0;
             dataMemWd = 32'hFA5E;,
 
+            $display("rd = %x", rd);
             assert(rd == adr);
         );
     endtask

@@ -1,6 +1,6 @@
 `include "Defs.svh"
 
-localparam InstrMemSize = 256;
+localparam InstrMemSize = `INSM_SIZE;
 
 module InstrMem
 (

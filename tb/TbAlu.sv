@@ -26,10 +26,10 @@ module TbAlu(
         `TEST("add",
 
             aluCtl = Add;            
-            src1 = 32'd5;
-            src2 = 32'd6;,
+            src1 = 32'h2004;
+            src2 = 32'hFFFFFFFC;,
 
-            assert(result == 32'd11);
+            assert(result == 32'h2000);
         );
 
         `TEST("mul",

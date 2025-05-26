@@ -2,17 +2,26 @@ import argparse
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--regm", help="Regfile init content")
+parser.add_argument("--regm_size", help="Regfile size")
+
 parser.add_argument("--insm", help="InstrMem init content")
+parser.add_argument("--insm_size", help="InstrMem size")
+
 parser.add_argument("--datm", help="DataMem init content")
+parser.add_argument("--datm_size", help="DataMem size")
+
 args = parser.parse_args()
 
-RegsMemSize = 32
-InstrMemSize = 256
-DataMemSize = 256
+RegsMemSize = int(args.regm_size)
+InstrMemSize = int(args.insm_size)
+DataMemSize = int(args.datm_size)
 
 with open(args.regm, "w") as f:
     for i in range(RegsMemSize):
-        f.write(f"{i:08X}\n")
+        if i == 9:
+            f.write(f"{0x2004:08X}\n")
+        else:
+            f.write(f"{i:08X}\n")
 
 with open(args.insm, "w") as f:
     for i in range(InstrMemSize):
@@ -23,4 +32,7 @@ with open(args.insm, "w") as f:
 
 with open(args.datm, "w") as f:
     for i in range(DataMemSize):
-        f.write(f"{i:08X}\n")
+        if i == 8192:
+            f.write(f"{10:08X}\n")
+        else:
+            f.write(f"{i:08X}\n")

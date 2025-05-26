@@ -1,6 +1,6 @@
 `include "Defs.svh"
 
-localparam MemSize = 256;
+localparam MemSize = `DATM_SIZE;
 
 module DataMem
 (

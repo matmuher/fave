@@ -8,6 +8,7 @@ module TbMaster;
     TbDataMem tbDataMem(.clk(clk));
     TbInstrMem tbInstrMem(.clk(clk));
     TbAlu tbAlu(.clk(clk));
+    TbFaVe tbFaVe(.clk(clk));
 
     task run_all();
 
@@ -15,6 +16,7 @@ module TbMaster;
         tbDataMem.run();
         tbInstrMem.run();
         tbAlu.run();
+        tbFaVe.run();
 
     endtask;
 

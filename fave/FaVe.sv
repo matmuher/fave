@@ -24,7 +24,7 @@ module FaVe
     );
 
     Data writeData;
-    Bit regfileWe = 1'b0;
+    Bit regfileWe = 1'b1;
     Regfile regfile(
         .reset(reset),
         .clk(clk),
@@ -42,14 +42,14 @@ module FaVe
         .aluCtl(aluCtl),
 
         .src1(regfileOut.rd1),
-        .src2(regfileOut.rd2),
+        .src2(imm),
 
         .result(aluResult)
     );
     Data aluResult;
 
     Bit dataMemWe = 1'b0;
-    Data adr;
+    Data adr = aluResult;
     Data dataMemWd;
     DataMem dataMem(
         .reset(reset),
@@ -62,6 +62,8 @@ module FaVe
         .rd(dataMemOut)
     );
     Data dataMemOut;
+
+    assign writeData = dataMemOut;
 
 endmodule
 
