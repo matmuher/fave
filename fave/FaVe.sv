@@ -6,6 +6,21 @@ module FaVe
     input clk
 );
     Data pc = 0;
+    Data pcNext = 0;
+    
+    PcPlus4 pcPlus4(
+        .pc(pc),
+        
+        .pcNext(pcNext));
+
+    Pc pcReg(
+        .clk(clk),
+        .reset(reset),
+        
+        .pcNext(pcNext),
+        
+        .pc(pc));
+
     InstrMem instrMem(
         .reset(reset),
         .clk(clk),
@@ -16,8 +31,6 @@ module FaVe
 
     Data imm;
     ImmExtend immExtend(
-        .clk(clk),
-
         .instr(instrMemOut),
 
         .imm(imm)
@@ -38,7 +51,6 @@ module FaVe
 
     AluCtl aluCtl = Add;
     Alu alu(
-        .clk(clk),
         .aluCtl(aluCtl),
 
         .src1(regfileOut.rd1),

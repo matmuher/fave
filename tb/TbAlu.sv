@@ -8,7 +8,6 @@ module TbAlu(
     Data src1;
     Data src2;
     Alu alu(
-        .clk(clk),
         .aluCtl(aluCtl),
 
         .src1(src1),

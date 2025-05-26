@@ -28,8 +28,7 @@ module TbRegfile(
 
         `TEST("parse a1 && a2 && a3",
             
-            instr = 32'hFFC4A303;
-            #5;,
+            instr = 32'hFFC4A303;,
 
             // init mem: x1 = 1, x2 = 2 ...
             assert(regfileOut.rd1 == 32'h2004);
@@ -44,7 +43,6 @@ module TbRegfile(
             regfileWe = 1'b1;
             regfileWd3 = 32'hFA5E;,
 
-            #5;
             assert(regfile.mem[regfile.a3] == 32'hFA5E);
         );
 
@@ -53,7 +51,6 @@ module TbRegfile(
             regfileWe = 1'b0;
             regfileWd3 = 32'hFA5E;,
 
-            #5;
             assert(regfile.mem[regfile.a3] == 32'(regfile.a3));
         );
     endtask

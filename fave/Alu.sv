@@ -2,7 +2,6 @@
 
 module Alu
 (
-    input clk,
     input AluCtl aluCtl,
 
     input Data src1,

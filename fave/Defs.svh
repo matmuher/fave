@@ -19,7 +19,7 @@ typedef enum logic [2:0] {
 
 `define TEST(name, setup, test)                     \
         setup;                                      \
-        reset = 1; #5; reset = 0; #5;               \
+        reset = 1; #2; reset = 0; #2;               \
         $display("test: [%s]", name);               \
         test;                                       \
 

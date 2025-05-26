@@ -4,8 +4,6 @@
 
 module ImmExtend
 (
-    input Bit clk,
-
     input Data instr,
 
     output Data imm

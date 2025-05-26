@@ -16,9 +16,9 @@ module TbFaVe(
 
         `TEST("check x6",
 
-            #1;,
+            ,
 
-            #2; $display("x6 = %x", faVe.regfile.mem[6]);
+            $display("x6 = %x", faVe.regfile.mem[6]);
         );
 
     endtask
