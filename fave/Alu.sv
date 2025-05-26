@@ -10,13 +10,13 @@ module Alu
 
     output Data result
 );
-    always @(posedge clk) begin
+    always_comb begin
         case(aluCtl)
-            Add: result <= src1 + src2;
-            Sub: result <= src1 - src2;
-            Mul: result <= src1 * src2;
-            Neq: result <= src1 ^ src2;
-            default: result <= '0; 
+            Add: result = src1 + src2;
+            Sub: result = src1 - src2;
+            Mul: result = src1 * src2;
+            Neq: result = src1 ^ src2;
+            default: result = '0; 
         endcase
     end
 endmodule

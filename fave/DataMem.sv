@@ -14,13 +14,13 @@ module DataMem
     output Data rd
 );
     Data mem[0:MemSize-1];
+    assign rd = mem[adr];
 
     always @(posedge clk or reset) begin
         if (reset) begin
             $readmemh(`INIT_DATM, mem);
         end else begin
-            rd <= mem[adr];
-            if (we) mem[adr] <= wd;
+            if (we) mem[adr] = wd;
         end
     end
 

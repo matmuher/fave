@@ -11,13 +11,10 @@ module InstrMem
     output Data instr
 );
     Data mem[0:InstrMemSize-1];
+    assign instr = mem[pc];
 
-    always @(posedge  clk or reset) begin
-        if (reset) begin
-            $readmemh(`INIT_INSM, mem);
-        end else begin
-            instr <= mem[pc];
-        end
+    always @(reset) begin
+        $readmemh(`INIT_INSM, mem);
     end
 
 endmodule

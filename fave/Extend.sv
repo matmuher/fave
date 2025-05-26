@@ -10,8 +10,5 @@ module ImmExtend
 
     output Data imm
 );
-    always @(posedge clk) begin
-        imm <= 32'(signed'(instr[`RangeImmI]));
-    end
-
+    assign imm = 32'(signed'(instr[`RangeImmI]));
 endmodule
