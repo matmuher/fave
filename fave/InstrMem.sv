@@ -13,7 +13,7 @@ module InstrMem
     Data mem[0:InstrMemSize-1];
     assign instr = mem[pc];
 
-    always @(reset) begin
+    always @(posedge reset) begin
         $readmemh(`INIT_INSM, mem);
     end
 

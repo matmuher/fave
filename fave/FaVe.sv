@@ -26,24 +26,26 @@ module FaVe
         .clk(clk),
         .pc(pc),
         
-        .instr(instrMemOut));
-    Data instrMemOut;
+        .instr(instr));
+    Data instr;
 
     Data imm;
+    logic [1:0] immSrc; 
     ImmExtend immExtend(
-        .instr(instrMemOut),
+        .immSrc(immSrc),
+        .instr(instr),
 
         .imm(imm)
     );
 
-    Data writeData;
+    Data writeData = dataMemOut;
     Bit regfileWe = 1'b1;
     Regfile regfile(
         .reset(reset),
         .clk(clk),
         .we(regfileWe),
 
-        .instr(instrMemOut),
+        .instr(instr),
         .wd3(writeData),
 
         .out(regfileOut));
@@ -60,9 +62,9 @@ module FaVe
     );
     Data aluResult;
 
-    Bit dataMemWe = 1'b0;
+    Bit dataMemWe;
     Data adr = aluResult;
-    Data dataMemWd;
+    Data dataMemWd = regfileOut.rd2;
     DataMem dataMem(
         .reset(reset),
         .clk(clk),
@@ -75,7 +77,10 @@ module FaVe
     );
     Data dataMemOut;
 
-    assign writeData = dataMemOut;
+    CtlUnit ctlUnit(
+        .instr(instr),
+        .dataMemWe(dataMemWe),
+        .immSrc(immSrc));
 
 endmodule
 

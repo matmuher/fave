@@ -22,7 +22,7 @@ module TbInstrMem(
             
             pc = 0;,
 
-            // init instr mem: mem[0] = FFC4A303, mem[1] = 1, mem[2] = 2 ...
+            // init instr mem: mem[0] = FFC4A303, mem[1] = 0064A423, mem[2] = 2 ...
             assert(instr == 32'hFFC4A303);
         );
 
@@ -30,7 +30,7 @@ module TbInstrMem(
             
             pc = 1;,
 
-            assert(instr == pc);
+            assert(instr == 32'h0064A423);
         );
     endtask
 

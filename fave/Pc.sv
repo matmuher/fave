@@ -7,7 +7,7 @@ module Pc(
     output Data pc
 );
 
-always @(posedge clk or reset) begin
+always @(posedge clk or posedge reset) begin
     if (reset) begin
         pc <= 0;
     end else begin

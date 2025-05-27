@@ -23,10 +23,15 @@ with open(args.regm, "w") as f:
         else:
             f.write(f"{i:08X}\n")
 
+instructions = [
+    "FFC4A303", # lw
+    "0064A423", # sw
+]
+
 with open(args.insm, "w") as f:
     for i in range(InstrMemSize):
-        if i == 0:
-            f.write(f"FFC4A303\n")
+        if i < len(instructions):
+            f.write(f"{instructions[i]}\n")
         else:
             f.write(f"{i:08X}\n")
 

@@ -31,7 +31,7 @@ module Regfile
         out.rd2 = mem[a2];
     end
 
-    always @(posedge clk or reset) begin
+    always @(posedge clk or posedge reset) begin
         if (reset) begin
             $readmemh(`INIT_REGM, mem);
         end else begin

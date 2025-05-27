@@ -19,6 +19,7 @@ module TbFaVe(
             ,
 
             $display("x6 = %x", faVe.regfile.mem[6]);
+            #4;
         );
 
     endtask

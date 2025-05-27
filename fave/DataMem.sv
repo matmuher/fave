@@ -16,7 +16,7 @@ module DataMem
     Data mem[0:MemSize-1];
     assign rd = mem[adr];
 
-    always @(posedge clk or reset) begin
+    always @(posedge clk or posedge reset) begin
         if (reset) begin
             $readmemh(`INIT_DATM, mem);
         end else begin
