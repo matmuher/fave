@@ -6,14 +6,14 @@
 module ImmExtend
 (
     input Data instr,
-    input [1:0] immSrc,
+    input ImmSrc immSrc,
 
     output Data imm
 );
     always_comb begin
         case(immSrc)
-            2'b00: imm = 32'(signed'(`RangeImmI));
-            2'b01: imm = 32'(signed'(`RangeImmS));
+            ImmI: imm = 32'(signed'(`RangeImmI));
+            ImmS: imm = 32'(signed'(`RangeImmS));
             default: imm = 32'bx;
         endcase
     end

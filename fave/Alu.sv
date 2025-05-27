@@ -13,8 +13,9 @@ module Alu
         case(aluCtl)
             Add: result = src1 + src2;
             Sub: result = src1 - src2;
-            Mul: result = src1 * src2;
-            Neq: result = src1 ^ src2;
+            Orr: result = src1 | src2;
+            And: result = src1 & src2;
+            Slt: result = 32'(src1 < src2);
             default: result = '0; 
         endcase
     end

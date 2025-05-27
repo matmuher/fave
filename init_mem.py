@@ -16,16 +16,21 @@ RegsMemSize = int(args.regm_size)
 InstrMemSize = int(args.insm_size)
 DataMemSize = int(args.datm_size)
 
+init_regs = {
+    5: 0x0006,
+    9: 0x2004
+}
 with open(args.regm, "w") as f:
     for i in range(RegsMemSize):
-        if i == 9:
-            f.write(f"{0x2004:08X}\n")
+        if i in init_regs:
+            f.write(f"{init_regs[i]:08X}\n")
         else:
             f.write(f"{i:08X}\n")
 
 instructions = [
     "FFC4A303", # lw
     "0064A423", # sw
+    "0062E233", # or
 ]
 
 with open(args.insm, "w") as f:

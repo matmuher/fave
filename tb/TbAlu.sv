@@ -31,31 +31,40 @@ module TbAlu(
             assert(result == 32'h2000);
         );
 
-        `TEST("mul",
+        `TEST("orr",
             
-            aluCtl = Mul;            
+            aluCtl = Orr;            
+            src1 = 32'b0101;
+            src2 = 32'b1010;,
+
+            assert(result == 32'b1111);
+        );
+
+        `TEST("and",
+
+            aluCtl = And;            
+            src1 = 32'b0101;
+            src2 = 32'b1110;,
+
+            assert(result == 32'b0100);
+        );
+
+        `TEST("slt: true",
+
+            aluCtl = Slt;            
             src1 = 32'd5;
             src2 = 32'd6;,
 
-            assert(result == 32'd30);
+            assert(result == 32'b1);
         );
 
-        `TEST("5 != 5",
+        `TEST("slt: false",
 
-            aluCtl = Neq;            
-            src1 = 32'd5;
+            aluCtl = Slt;            
+            src1 = 32'd6;
             src2 = 32'd5;,
 
-            assert(result == 32'd0);
-        );
-
-        `TEST("5 != 6",
-
-            aluCtl = Neq;            
-            src1 = 32'd5;
-            src2 = 32'd6;,
-
-            assert(result != 32'd0);
+            assert(result == 32'b0);
         );
     endtask
 

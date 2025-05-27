@@ -28,41 +28,54 @@ module FaVe
         
         .instr(instr));
     Data instr;
-
-    Data imm;
-    logic [1:0] immSrc; 
+ 
     ImmExtend immExtend(
         .immSrc(immSrc),
         .instr(instr),
 
-        .imm(imm)
-    );
+        .imm(imm));
+    Data imm;
 
-    Data writeData = dataMemOut;
-    Bit regfileWe = 1'b1;
+    Mxr1Bit regfileWd3Mxr(
+        .signal(regfileSrc),
+
+        .src1(aluResult),
+        .src2(dataMemOut),
+
+        .result(regfileWd3)
+    );
+    Data regfileWd3;
+    
     Regfile regfile(
         .reset(reset),
         .clk(clk),
         .we(regfileWe),
 
         .instr(instr),
-        .wd3(writeData),
+        .wd3(regfileWd3),
 
         .out(regfileOut));
     RegfileOut regfileOut;
 
-    AluCtl aluCtl = Add;
+    Mxr1Bit aluSrc2Mxr(
+        .signal(aluSrc),
+
+        .src1(regfileOut.rd2),
+        .src2(imm),
+        
+        .result(aluSrc2));
+    Data aluSrc2;
+
     Alu alu(
         .aluCtl(aluCtl),
 
         .src1(regfileOut.rd1),
-        .src2(imm),
+        .src2(aluSrc2),
 
         .result(aluResult)
     );
     Data aluResult;
 
-    Bit dataMemWe;
     Data adr = aluResult;
     Data dataMemWd = regfileOut.rd2;
     DataMem dataMem(
@@ -79,8 +92,19 @@ module FaVe
 
     CtlUnit ctlUnit(
         .instr(instr),
+        
         .dataMemWe(dataMemWe),
-        .immSrc(immSrc));
+        .regfileWe(regfileWe),
+        .regfileSrc(regfileSrc),
+        .aluSrc(aluSrc),
+        .immSrc(immSrc),
+        .aluCtl(aluCtl));
+    Bit dataMemWe;
+    Bit regfileWe;
+    Bit regfileSrc;
+    Bit aluSrc;
+    ImmSrc immSrc;
+    AluCtl aluCtl;
 
 endmodule
 
