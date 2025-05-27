@@ -38,8 +38,8 @@ typedef enum logic [1:0] {
 typedef enum logic [2:0] {
     Add = 3'b000,
     Sub = 3'b001,
-    Orr = 3'b010,
-    And = 3'b011,
+    And = 3'b010,
+    Orr = 3'b011,
     Slt = 3'b101,
     Xxx = 3'bxxx 
 } AluCtl;
@@ -68,7 +68,6 @@ typedef struct packed {
     ImmSrc immSrc;
     AluSrc aluSrc;
     RegfileSrc regfileSrc;
-    AluCtl aluCtl;
     IsBranch isBranch;
 } CtlSignals;
 

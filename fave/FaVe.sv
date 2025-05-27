@@ -8,8 +8,10 @@ module FaVe
     CtlUnit ctlUnit(
         .instr(instr),
         
-        .ctl(ctl));
+        .ctl(ctl),
+        .aluCtl(aluCtl));
     CtlSignals ctl;
+    AluCtl aluCtl;
 
     Sum2 pcPlus4Sum2(
         .src1(pc),
@@ -89,7 +91,7 @@ module FaVe
     Data aluSrc2;
 
     Alu alu(
-        .aluCtl(ctl.aluCtl),
+        .aluCtl(aluCtl),
 
         .src1(regfileOut.rd1),
         .src2(aluSrc2),
