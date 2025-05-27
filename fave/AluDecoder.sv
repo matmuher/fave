@@ -26,4 +26,5 @@ module AluDecoder(
                     default: aluCtl = Xxx;
                 endcase
         endcase
+
 endmodule;

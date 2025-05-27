@@ -22,4 +22,5 @@ module Alu
 
         isZero = result == '0;
     end
+
 endmodule

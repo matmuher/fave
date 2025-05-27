@@ -60,11 +60,13 @@ module FaVe
         .imm(imm));
     Data imm;
 
-    Mxr1Bit regfileWd3Mxr(
+    Mxr2Bit regfileWd3Mxr(
         .signal(ctl.regfileSrc),
 
         .src1(aluResult),
         .src2(dataMemOut),
+        .src3(pcPlus4),
+        .src4(0),
 
         .result(regfileWd3)
     );
@@ -117,7 +119,7 @@ module FaVe
     Data dataMemOut;
 
     // if branch instr and branch is taken - choose pcTarget
-    assign pcSrc = ctl.isBranch && isZero ? PcSrcTarget : PcSrcPlus4;
+    assign pcSrc = ctl.isJump || (ctl.isBranch && isZero) ? PcSrcTarget : PcSrcPlus4;
     Bit pcSrc;
 
 endmodule

@@ -7,12 +7,12 @@ module Pc(
     output Data pc
 );
 
-always @(posedge clk or posedge reset) begin
-    if (reset) begin
-        pc <= InstrLoadAdr;
-    end else begin
-        pc <= pcNext;
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            pc <= InstrLoadAdr;
+        end else begin
+            pc <= pcNext;
+        end
     end
-end
 
 endmodule;
