@@ -7,7 +7,8 @@ module Alu
     input Data src1,
     input Data src2,
 
-    output Data result
+    output Data result,
+    output isZero
 );
     always_comb begin
         case(aluCtl)
@@ -16,7 +17,9 @@ module Alu
             Orr: result = src1 | src2;
             And: result = src1 & src2;
             Slt: result = 32'(src1 < src2);
-            default: result = '0; 
+            default: result = 'x; 
         endcase
+
+        isZero = result == '0;
     end
 endmodule

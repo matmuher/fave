@@ -11,7 +11,10 @@ module InstrMem
     output Data instr
 );
     Data mem[0:InstrMemSize-1];
-    assign instr = mem[pc];
+    Data shiftedPc;
+    assign shiftedPc = pc >> 2;
+    
+    assign instr = mem[shiftedPc];
 
     always @(posedge reset) begin
         $readmemh(`INIT_INSM, mem);

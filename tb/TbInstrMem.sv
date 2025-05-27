@@ -20,7 +20,7 @@ module TbInstrMem(
 
         `TEST("read instr",
             
-            pc = 0;,
+            pc = InstrLoadAdr;,
 
             // init instr mem: mem[0] = FFC4A303, mem[1] = 0064A423, mem[2] = 2 ...
             assert(instr == 32'hFFC4A303);
@@ -28,7 +28,7 @@ module TbInstrMem(
 
         `TEST("read next instr",
             
-            pc = 1;,
+            pc = InstrLoadAdr + 4;,
 
             assert(instr == 32'h0064A423);
         );

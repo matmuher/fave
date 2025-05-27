@@ -1,6 +1,6 @@
 SRC_DIR = fave
 SRC = FaVe.sv InstrMem.sv Regfile.sv \
-	Extend.sv Alu.sv PcPlus4.sv Pc.sv CtlUnit.sv Mxr1Bit.sv
+	Extend.sv Alu.sv Pc.sv CtlUnit.sv Mxr1Bit.sv Sum2.sv
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))
 
 TEST_DIR = tb
@@ -16,7 +16,7 @@ INIT_DATM = init_datm.hex
 DATM_SIZE = 16384
 
 INIT_INSM = init_insm.hex
-INSM_SIZE = 256
+INSM_SIZE = 16384
 
 BUILD_DIR = build
 WAVEFRONT_FILE = wavefront.vcd

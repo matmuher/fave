@@ -22,9 +22,16 @@ typedef enum logic [0:0] {
     AluSrcXXX = 1'bx
 } AluSrc;
 
+typedef enum logic [0:0] {
+    PcSrcPlus4 = 1'b0,
+    PcSrcTarget = 1'b1,
+    PcSrcXXX = 1'bx
+} PcSrc;
+
 typedef enum logic [1:0] {
     ImmI = 2'b00,
     ImmS = 2'b01,
+    ImmB = 2'b10,
     ImmXXX = 2'bxx
 } ImmSrc;
 
@@ -43,4 +50,6 @@ typedef enum logic [2:0] {
         $display("test: [%s]", name);               \
         test;                                       \
 
-`endif
+localparam InstrLoadAdr = 'h1000;
+
+`endif // DEFS_SVH

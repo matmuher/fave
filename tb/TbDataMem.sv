@@ -26,16 +26,16 @@ module TbDataMem(
 
         `TEST("read data mem",
             
-            adr = 32'd29;,
+            adr = 32'h2000;,
 
             // init mem: mem[1] = 1, mem[2] = 2 ...
-            assert(adr == rd);
+            assert(rd == 32'hA);
         );
 
         `TEST("we: write data mem",
             
             dataMemWe = 1'b1;
-            adr = 32'd33;
+            adr = 32'd16;
             dataMemWd = 32'hFA5E;,
 
             assert(rd == 32'hFA5E);
@@ -44,10 +44,10 @@ module TbDataMem(
         `TEST("!we: write data mem",
 
             dataMemWe = 1'b0;
+            adr = 32'd12;
             dataMemWd = 32'hFA5E;,
 
-            $display("rd = %x", rd);
-            assert(rd == adr);
+            assert(rd == (adr >> 2));
         );
     endtask
 

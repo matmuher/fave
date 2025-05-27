@@ -26,9 +26,11 @@ module TbFaVe(
         // after lw
         `CHECK_AND_MOVE("lw", faVe.regfile.mem[6] == 32'hA)
         // after sw
-        `CHECK_AND_MOVE("sw", faVe.dataMem.mem['h200C] == 32'hA);
+        `CHECK_AND_MOVE("sw", faVe.dataMem.mem['h200C >> 2] == 32'hA);
         // after or
         `CHECK_AND_MOVE("or", faVe.regfile.mem[4] == 32'hE);
+        // after beq
+        `CHECK_AND_MOVE("beq", faVe.pc == 32'h1000);
 
     endtask
 

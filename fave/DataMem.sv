@@ -8,19 +8,21 @@ module DataMem
     input clk,
     input we,
 
-    input Data adr, // 8 bit is enough
+    input Data adr,
     input Data wd,
 
     output Data rd
 );
     Data mem[0:MemSize-1];
-    assign rd = mem[adr];
+    Data shiftedAdr;
+    assign shiftedAdr = adr >> 2;
+    assign rd = mem[shiftedAdr];
 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             $readmemh(`INIT_DATM, mem);
         end else begin
-            if (we) mem[adr] = wd;
+            if (we) mem[shiftedAdr] = wd;
         end
     end
 

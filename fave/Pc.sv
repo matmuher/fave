@@ -9,7 +9,7 @@ module Pc(
 
 always @(posedge clk or posedge reset) begin
     if (reset) begin
-        pc <= 0;
+        pc <= InstrLoadAdr;
     end else begin
         pc <= pcNext;
     end

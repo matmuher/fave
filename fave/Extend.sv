@@ -2,6 +2,7 @@
 
 `define RangeImmI {instr[31:20]}
 `define RangeImmS {instr[31:25], instr[11:7]}
+`define RangeImmB {instr[7], instr[30:25], instr[11:8], 1'b0} 
 
 module ImmExtend
 (
@@ -14,6 +15,7 @@ module ImmExtend
         case(immSrc)
             ImmI: imm = 32'(signed'(`RangeImmI));
             ImmS: imm = 32'(signed'(`RangeImmS));
+            ImmB: imm = 32'(signed'(`RangeImmB));
             default: imm = 32'bx;
         endcase
     end

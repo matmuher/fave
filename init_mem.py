@@ -27,22 +27,25 @@ with open(args.regm, "w") as f:
         else:
             f.write(f"{i:08X}\n")
 
+loadAdr = 0x1000 // 4;
 instructions = [
     "FFC4A303", # lw
     "0064A423", # sw
     "0062E233", # or
+    "FE420AE3", # beq
 ]
 
 with open(args.insm, "w") as f:
-    for i in range(InstrMemSize):
-        if i < len(instructions):
-            f.write(f"{instructions[i]}\n")
-        else:
+    for i in range(InstrMemSize // 4):
+        if (i < loadAdr or i >= loadAdr + len(instructions)):
             f.write(f"{i:08X}\n")
+        else:
+            f.write(f"{instructions[i - loadAdr]}\n")
+
 
 with open(args.datm, "w") as f:
-    for i in range(DataMemSize):
-        if i == 8192:
+    for i in range(DataMemSize // 4):
+        if i == (0x2000 // 4):
             f.write(f"{10:08X}\n")
         else:
             f.write(f"{i:08X}\n")
