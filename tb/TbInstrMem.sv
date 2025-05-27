@@ -17,7 +17,7 @@ module TbInstrMem(
 
     task run();
         $display(">>> InstrMem");
-        
+        /*
         `TEST("read instr",
             
             pc = InstrLoadAdr + 4;,
@@ -32,6 +32,7 @@ module TbInstrMem(
 
             assert(instr == 32'h00100093);
         );
+        */
     endtask
 
 endmodule

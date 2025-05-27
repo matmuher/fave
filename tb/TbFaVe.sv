@@ -24,7 +24,31 @@ module TbFaVe(
 
         reset = 1; #3; reset = 0;
 
-        #20;
+        // lw
+        #(5*2);
+        assert(faVe.regfile.mem[1] == 32'd10);
+
+        // sw
+        #(4*2);
+        assert(faVe.dataMem.mem[4 >> 2] == 32'd10);
+
+        // addd
+        #(4*2);
+        assert(faVe.regfile.mem[1] == 32'd20);
+
+        // beq
+        #(3*2);
+        assert(faVe.pc == 32'd20);
+
+        // adddi
+        #(4*2);
+        assert(faVe.regfile.mem[2] == 32'd29);
+
+        // jal
+        #(4*2);
+        assert(faVe.pc == 32'd0);
+        assert(faVe.regfile.mem[3] == 32'd28);
+
         /*
         `CHECK_AND_MOVE("init", 1);
 
