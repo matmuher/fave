@@ -5,7 +5,11 @@ module FaVe
     input reset,
     input clk
 );
-    Data pc = 0;
+    CtlUnit ctlUnit(
+        .instr(instr),
+        
+        .ctl(ctl));
+    CtlSignals ctl;
 
     Sum2 pcPlus4Sum2(
         .src1(pc),
@@ -37,6 +41,7 @@ module FaVe
         .pcNext(pcNext),
         
         .pc(pc));
+    Data pc;
 
     InstrMem instrMem(
         .reset(reset),
@@ -47,14 +52,14 @@ module FaVe
     Data instr;
  
     ImmExtend immExtend(
-        .immSrc(immSrc),
+        .immSrc(ctl.immSrc),
         .instr(instr),
 
         .imm(imm));
     Data imm;
 
     Mxr1Bit regfileWd3Mxr(
-        .signal(regfileSrc),
+        .signal(ctl.regfileSrc),
 
         .src1(aluResult),
         .src2(dataMemOut),
@@ -66,7 +71,7 @@ module FaVe
     Regfile regfile(
         .reset(reset),
         .clk(clk),
-        .we(regfileWe),
+        .we(ctl.regfileWe),
 
         .instr(instr),
         .wd3(regfileWd3),
@@ -75,7 +80,7 @@ module FaVe
     RegfileOut regfileOut;
 
     Mxr1Bit aluSrc2Mxr(
-        .signal(aluSrc),
+        .signal(ctl.aluSrc),
 
         .src1(regfileOut.rd2),
         .src2(imm),
@@ -84,7 +89,7 @@ module FaVe
     Data aluSrc2;
 
     Alu alu(
-        .aluCtl(aluCtl),
+        .aluCtl(ctl.aluCtl),
 
         .src1(regfileOut.rd1),
         .src2(aluSrc2),
@@ -100,7 +105,7 @@ module FaVe
     DataMem dataMem(
         .reset(reset),
         .clk(clk),
-        .we(dataMemWe),
+        .we(ctl.dataMemWe),
 
         .adr(adr),
         .wd(dataMemWd),
@@ -109,23 +114,8 @@ module FaVe
     );
     Data dataMemOut;
 
-    CtlUnit ctlUnit(
-        .instr(instr),
-        .isZero(isZero),
-        
-        .dataMemWe(dataMemWe),
-        .regfileWe(regfileWe),
-        .regfileSrc(regfileSrc),
-        .aluSrc(aluSrc),
-        .immSrc(immSrc),
-        .aluCtl(aluCtl),
-        .pcSrc(pcSrc));
-    Bit dataMemWe;
-    Bit regfileWe;
-    Bit regfileSrc;
-    Bit aluSrc;
-    ImmSrc immSrc;
-    AluCtl aluCtl;
+    // if branch instr and branch is taken - choose pcTarget
+    assign pcSrc = ctl.isBranch && isZero ? PcSrcTarget : PcSrcPlus4;
     Bit pcSrc;
 
 endmodule

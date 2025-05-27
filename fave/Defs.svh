@@ -32,7 +32,7 @@ typedef enum logic [1:0] {
     ImmI = 2'b00,
     ImmS = 2'b01,
     ImmB = 2'b10,
-    ImmXXX = 2'bxx
+    ImmX = 2'bxx
 } ImmSrc;
 
 typedef enum logic [2:0] {
@@ -43,6 +43,34 @@ typedef enum logic [2:0] {
     Slt = 3'b101,
     Xxx = 3'bxxx 
 } AluCtl;
+
+typedef enum logic [0:0] {
+    IsBranchNoo = 1'b0,
+    IsBranchYes = 1'b1,
+    IsBranchXXX = 1'bx
+} IsBranch;
+
+typedef enum logic [0:0] {
+    RegWeNoo = 1'b0,
+    RegWeYes = 1'b1,
+    RegWeXXX = 1'bx
+} RegWe;
+
+typedef enum logic [0:0] {
+    DataWeNoo = 1'b0,
+    DataWeYes = 1'b1,
+    DataWeXXX = 1'bx
+} DataWe;
+
+typedef struct packed {
+    DataWe dataMemWe;
+    RegWe regfileWe;
+    ImmSrc immSrc;
+    AluSrc aluSrc;
+    RegfileSrc regfileSrc;
+    AluCtl aluCtl;
+    IsBranch isBranch;
+} CtlSignals;
 
 `define TEST(name, setup, test)                     \
         setup;                                      \

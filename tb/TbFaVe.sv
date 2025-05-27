@@ -1,9 +1,12 @@
 `include "Defs.svh"
 
-`define CHECK_AND_MOVE(name, test)          \
+`define CHECK_AND_MOVE_D(name, setup, test)   \
     $display("Check state: [%s]", name);    \
+    setup;                                  \
     assert(test);                           \
-    #2;                                     \
+    #2;
+
+`define CHECK_AND_MOVE(name, test) `CHECK_AND_MOVE_D(name,,test)
 
 module TbFaVe(
     input clk
@@ -31,6 +34,8 @@ module TbFaVe(
         `CHECK_AND_MOVE("or", faVe.regfile.mem[4] == 32'hE);
         // after beq
         `CHECK_AND_MOVE("beq", faVe.pc == 32'h1000);
+        // after lw (check loop)
+        `CHECK_AND_MOVE("lw: loop", faVe.regfile.mem[6] == 32'hA);
 
     endtask
 
