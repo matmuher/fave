@@ -38,7 +38,7 @@ module CtlUnit(
 
             // jal
             7'b1101111: begin
-                ctl = {DataWeNoo, RegWeYes, ImmJ, AluSrcXXX, RegfileSrcPcPlus4, IsBranchNo, IsJumpYes};
+                ctl = {DataWeNoo, RegWeYes, ImmJ, AluSrcXXX, RegfileSrcPcPlus4, IsBranchNoo, IsJumpYes};
                 coarseAluOp = Mor;
             end
 

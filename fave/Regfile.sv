@@ -21,6 +21,7 @@ module Regfile
     RegIdx a3;
 
     Data mem [0:RegNum-1];
+    assign mem[0] = 0;
 
     always_comb begin
         a1 = instr[`RangeA1];

@@ -23,14 +23,14 @@ module TbInstrMem(
             pc = InstrLoadAdr;,
 
             // init instr mem: mem[0] = FFC4A303, mem[1] = 0064A423, mem[2] = 2 ...
-            assert(instr == 32'hFFC4A303);
+            assert(instr == 32'h00800313);
         );
 
         `TEST("read next instr",
             
             pc = InstrLoadAdr + 4;,
 
-            assert(instr == 32'h0064A423);
+            assert(instr == 32'h00100093);
         );
     endtask
 

@@ -88,6 +88,6 @@ typedef struct packed {
         $display("test: [%s]", name);               \
         test;                                       \
 
-localparam InstrLoadAdr = 'h1000;
+localparam InstrLoadAdr = 'd0;
 
 `endif // DEFS_SVH

@@ -27,13 +27,35 @@ with open(args.regm, "w") as f:
         else:
             f.write(f"{i:08X}\n")
 
-loadAdr = 0x1000 // 4;
+
+'''
+Asm:
+    addi x6, x0, 8
+    addi x1, x0, 1
+    or x6, x6, x1
+    sw x6, 8(x0)
+    lw x7, 8(x0)
+    add x7, x7, x1
+    jal x8, 8
+    add x7, x7, x1
+    sub x7, x7, x1
+    beq x7, x7, -32
+'''
+
 instructions = [
-    "FFC4A303", # lw
-    "0064A423", # sw
-    "0062E233", # or
-    "FE420AE3", # beq
+"00800313",
+"00100093",
+"00136333",
+"00602423",
+"00802383",
+"001383b3",
+"0080046f",
+"001383b3",
+"401383b3",
+"fc738ee3",
 ]
+
+loadAdr = 0x0;
 
 with open(args.insm, "w") as f:
     for i in range(InstrMemSize // 4):
