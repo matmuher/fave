@@ -17,10 +17,10 @@ module TbInstrMem(
 
     task run();
         $display(">>> InstrMem");
-
+        
         `TEST("read instr",
             
-            pc = InstrLoadAdr;,
+            pc = InstrLoadAdr + 4;,
 
             // init instr mem: mem[0] = FFC4A303, mem[1] = 0064A423, mem[2] = 2 ...
             assert(instr == 32'h00800313);
@@ -28,7 +28,7 @@ module TbInstrMem(
 
         `TEST("read next instr",
             
-            pc = InstrLoadAdr + 4;,
+            pc = InstrLoadAdr + 8;,
 
             assert(instr == 32'h00100093);
         );

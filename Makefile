@@ -1,6 +1,6 @@
 SRC_DIR = fave
 SRC = FaVe.sv InstrMem.sv Regfile.sv \
-	Extend.sv Alu.sv Pc.sv CtlUnit.sv Mxr.sv Sum2.sv AluDecoder.sv
+	Extend.sv Alu.sv Pc.sv CtlUnit.sv Mxr.sv Sum2.sv AluDecoder.sv Reg.sv
 SRC := $(addprefix $(SRC_DIR)/, $(SRC))
 
 TEST_DIR = tb

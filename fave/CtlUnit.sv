@@ -1,9 +1,80 @@
+typedef enum logic [3:0] {
+    Fetch,
+    Decode,
+    ComputeAdr,
+    ReadMem,
+    RegWrite
+} State;
+
 module CtlUnit(
+    input clk,
+    input reset,
+
     input Data instr,
 
     output CtlSignals ctl,
     output AluCtl aluCtl
 );
+    State state, nextState;
+
+// [determine next state]
+    always_comb begin
+        case(state)
+            Fetch: nextState = Decode;
+            Decode: nextState = ComputeAdr;
+            ComputeAdr: nextState = ReadMem;
+            ReadMem: nextState = RegWrite;
+            RegWrite: nextState = Fetch;
+            default: nextState = Fetch;
+        endcase
+    end
+
+// [change state]
+    always @(posedge clk or posedge reset) begin
+        if (reset) state <= Fetch;
+        else state <= nextState;
+    end
+
+// [output state]
+    always_comb begin
+        case(state)
+            Fetch: begin
+                ctl = {PcEnNoo, FetchInstrYes, DataWeNoo, RegWeNoo,
+                       ImmX, AluSrcXXX, RegfileSrcXXX, IsBranchXXX, IsJumpXXX};
+                coarseAluOp = Xxx;
+            end
+            Decode: begin
+                ctl = {PcEnNoo, FetchInstrNoo, DataWeNoo, RegWeNoo,
+                       ImmX, AluSrcXXX, RegfileSrcXXX, IsBranchXXX, IsJumpXXX};;
+                coarseAluOp = Xxx;
+            end
+            ComputeAdr: begin
+                ctl = {PcEnNoo, FetchInstrNoo, DataWeNoo, RegWeNoo,
+                       ImmI, AluSrcImm, RegfileSrcXXX, IsBranchXXX, IsJumpXXX};;
+                coarseAluOp = Add;
+            end
+            ReadMem: begin
+                ctl = {PcEnNoo, FetchInstrNoo, DataWeNoo, RegWeXXX,
+                       ImmX, AluSrcXXX, RegfileSrcXXX, IsBranchXXX, IsJumpXXX};;
+                coarseAluOp = Xxx;
+            end
+            RegWrite: begin
+                ctl = {PcEnYes, FetchInstrNoo, DataWeNoo, RegWeYes,
+                       ImmX, AluSrcXXX, RegfileSrcDataMem, IsBranchXXX, IsJumpXXX};;
+                coarseAluOp = Xxx;
+            end
+            default: begin
+                ctl = {PcEnXXX, FetchInstrXXX, DataWeXXX, RegWeXXX,
+                       ImmX, AluSrcXXX, RegfileSrcXXX, IsBranchXXX, IsJumpXXX};;
+                coarseAluOp = Xxx;
+            end
+        endcase
+    end
+
+    AluCtl coarseAluOp;
+endmodule;
+
+/*
     always_comb begin
         case(instr[6:0])
             // lw
@@ -58,4 +129,4 @@ module CtlUnit(
         
         .aluCtl(aluCtl));
 
-endmodule;
+*/

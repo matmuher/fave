@@ -6,7 +6,10 @@ module FaVe
     input clk
 );
     CtlUnit ctlUnit(
-        .instr(instr),
+        .clk(clk),
+        .reset(reset),
+
+        .instr(instrRegOut),
         
         .ctl(ctl),
         .aluCtl(aluCtl));
@@ -27,6 +30,10 @@ module FaVe
         .result(pcTarget));
     Data pcTarget;
 
+    // if branch instr and branch is taken - choose pcTarget
+    assign pcSrc = ctl.isJump || (ctl.isBranch && isZero) ? PcSrcTarget : PcSrcPlus4;
+    Bit pcSrc;
+
     Mxr1Bit pcSrcMxr(
         .signal(pcSrc),
 
@@ -36,13 +43,15 @@ module FaVe
         .result(pcNext));
     Data pcNext;
 
-    Pc pcReg(
+    RegEn pcReg(
         .clk(clk),
+        .en(ctl.pcEn),
         .reset(reset),
         
-        .pcNext(pcNext),
+        .resetVal(InstrLoadAdr),
+        .in(pcNext),
         
-        .pc(pc));
+        .out(pc));
     Data pc;
 
     InstrMem instrMem(
@@ -53,9 +62,20 @@ module FaVe
         .instr(instr));
     Data instr;
  
+    RegEn instrReg(
+        .reset(reset),
+        .clk(clk),
+        .en(ctl.fetchInstr),
+        
+        .resetVal('hDEAD),
+        .in(instr),
+        
+        .out(instrRegOut));
+    Data instrRegOut;
+
     ImmExtend immExtend(
         .immSrc(ctl.immSrc),
-        .instr(instr),
+        .instr(instrRegOut),
 
         .imm(imm));
     Data imm;
@@ -63,8 +83,8 @@ module FaVe
     Mxr2Bit regfileWd3Mxr(
         .signal(ctl.regfileSrc),
 
-        .src1(aluResult),
-        .src2(dataMemOut),
+        .src1(aluRegOut),
+        .src2(dataRegOut),
         .src3(pcPlus4),
         .src4(0),
 
@@ -77,16 +97,38 @@ module FaVe
         .clk(clk),
         .we(ctl.regfileWe),
 
-        .instr(instr),
+        .instr(instrRegOut),
         .wd3(regfileWd3),
 
         .out(regfileOut));
     RegfileOut regfileOut;
 
+    Reg a1Reg(
+        .clk(clk),
+        .reset(reset),
+
+        .resetVal('hA1),
+        .in(regfileOut.rd1),
+
+        .out(a1RegOut)
+    );
+    Data a1RegOut;
+
+    Reg a2Reg(
+        .clk(clk),
+        .reset(reset),
+
+        .resetVal('hA2),
+        .in(regfileOut.rd2),
+
+        .out(a2RegOut)
+    );
+    Data a2RegOut;
+
     Mxr1Bit aluSrc2Mxr(
         .signal(ctl.aluSrc),
 
-        .src1(regfileOut.rd2),
+        .src1(a2RegOut),
         .src2(imm),
         
         .result(aluSrc2));
@@ -95,7 +137,7 @@ module FaVe
     Alu alu(
         .aluCtl(aluCtl),
 
-        .src1(regfileOut.rd1),
+        .src1(a1RegOut),
         .src2(aluSrc2),
 
         .result(aluResult),
@@ -104,23 +146,37 @@ module FaVe
     Data aluResult;
     Bit isZero;
 
-    Data adr = aluResult;
-    Data dataMemWd = regfileOut.rd2;
+    Reg aluReg(
+        .reset(reset),
+        .clk(clk),
+
+        .resetVal('h12345),
+        .in(aluResult),
+
+        .out(aluRegOut));
+    Data aluRegOut;
+
     DataMem dataMem(
         .reset(reset),
         .clk(clk),
         .we(ctl.dataMemWe),
 
-        .adr(adr),
-        .wd(dataMemWd),
+        .adr(aluRegOut),
+        .wd(a2RegOut),
 
         .rd(dataMemOut)
     );
     Data dataMemOut;
 
-    // if branch instr and branch is taken - choose pcTarget
-    assign pcSrc = ctl.isJump || (ctl.isBranch && isZero) ? PcSrcTarget : PcSrcPlus4;
-    Bit pcSrc;
+    Reg dataReg(
+        .reset(reset),
+        .clk(clk),
+
+        .resetVal('hDADA),
+        .in(dataMemOut),
+
+        .out(dataRegOut));
+    Data dataRegOut;
 
 endmodule
 

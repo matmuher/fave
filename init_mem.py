@@ -43,6 +43,7 @@ Asm:
 '''
 
 instructions = [
+"00802083", # lw x1, 8(x0)
 "00800313",
 "00100093",
 "00136333",
@@ -67,7 +68,7 @@ with open(args.insm, "w") as f:
 
 with open(args.datm, "w") as f:
     for i in range(DataMemSize // 4):
-        if i == (0x2000 // 4):
+        if i == (0x2000 // 4) or i == (8 // 4):
             f.write(f"{10:08X}\n")
         else:
             f.write(f"{i:08X}\n")

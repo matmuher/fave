@@ -72,7 +72,21 @@ typedef enum logic [0:0] {
     DataWeXXX = 1'bx
 } DataWe;
 
+typedef enum logic [0:0] {
+    FetchInstrNoo = 1'b0,
+    FetchInstrYes = 1'b1,
+    FetchInstrXXX = 1'bx
+} FetchInstr;
+
+typedef enum logic [0:0] {
+    PcEnNoo = 1'b0,
+    PcEnYes = 1'b1,
+    PcEnXXX = 1'bx
+} PcEn;
+
 typedef struct packed {
+    PcEn pcEn;
+    FetchInstr fetchInstr;
     DataWe dataMemWe;
     RegWe regfileWe;
     ImmSrc immSrc;
