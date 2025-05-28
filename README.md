@@ -5,6 +5,9 @@ That's one of few series I've watched during getting bachelor degree, that was g
 
 ![](faye.webp)
 
+Briefly, FaVe is a Finit State Machine. Evey cycle it determines what state it should get next.
+That logic is located in the [fave/CtlUnit.sv](fave/CtlUnit.sv). My version is simplified as instruction and data memory are separated.
+
 # To build
 
 ```
@@ -48,3 +51,5 @@ CPU design is taken from: Harris & Harris: Digital Design and Computer Architect
 To easily get instruction in hex format: https://luplab.gitlab.io/rvcodecjs/
 
 To execute riscv code step-by-step: https://www.cs.cornell.edu/courses/cs3410/2019sp/riscv/interpreter/
+
+Understand verilog concepts by writing small exercises: https://hdlbits.01xz.net/wiki/Main_Page
