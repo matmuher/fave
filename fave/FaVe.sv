@@ -178,5 +178,33 @@ module FaVe
         .out(dataRegOut));
     Data dataRegOut;
 
+//-----------------------------
+
+    State curState;
+    assign curState = ctlUnit.state;
+
+    integer trace_file;
+    initial begin
+        trace_file = $fopen("fave_trace.log", "w");
+        $fwrite(trace_file, "PC\tx0-x31\n");
+        $fflush(trace_file);
+    end
+
+    always @(posedge clk) begin
+        if (!reset && curState == Fetch) begin
+            $fwrite(trace_file, "%d", pc);
+            
+            for (int i = 0; i < 32; i++) begin
+                $fwrite(trace_file, "%d", regfile.mem[i]);
+            end
+            $fwrite(trace_file, "\n");
+            $fflush(trace_file);
+        end
+    end
+
+    final begin
+        $fclose(trace_file);
+    end
+
 endmodule
 

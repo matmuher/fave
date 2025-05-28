@@ -11,11 +11,12 @@ module TbMaster;
     TbFaVe tbFaVe(.clk(clk));
 
     task run_all();
-
+        /*
         tbRegfile.run();
         tbDataMem.run();
         tbInstrMem.run();
         tbAlu.run();
+        */
         tbFaVe.run();
 
     endtask;

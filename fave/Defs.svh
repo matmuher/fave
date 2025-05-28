@@ -104,4 +104,19 @@ typedef struct packed {
 
 localparam InstrLoadAdr = 'd0;
 
+typedef enum logic [3:0] {
+    XStage,
+    Fetch,
+    Decode,
+    ComputeAdr,
+    ReadMem,
+    WriteMemToReg,
+    WriteMem,
+    ExecuteR,
+    WriteAluToReg,
+    Beq,
+    ExecuteI,
+    Jal
+} State;
+
 `endif // DEFS_SVH
