@@ -1,6 +1,7 @@
 # FaVe
 risc-v multi-cycle simulator written in System Verilog
-named afer Faye Valentine from Cowboy Bebop
+named afer Faye Valentine from Cowboy Bebop.
+That's one of few series I've watched during getting bachelor degree, that was good.
 
 ![](faye.webp)
 
@@ -43,5 +44,7 @@ My version: "Verilator 5.036 2025-04-27 rev v5.036-48-g0dc93c1d5"
 # Usefull links
 
 CPU design is taken from: Harris & Harris: Digital Design and Computer Architecture - RISCV Edition
+
 To easily get instruction in hex format: https://luplab.gitlab.io/rvcodecjs/
+
 To execute riscv code step-by-step: https://www.cs.cornell.edu/courses/cs3410/2019sp/riscv/interpreter/
